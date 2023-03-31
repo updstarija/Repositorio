@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a7096c2585c24093a892fb60eadc533b" Name="Diagram1" ZoomLevel="78">
+        <EntityTypeShape EntityType="SAADSTJModel.ComprobanteRegistro" Width="1.5" PointX="7.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAADSTJModel.Estudiante" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAADSTJModel.InscripcionCarrera" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAADSTJModel.Materia" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAADSTJModel.Persona" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAADSTJModel.PlanEstudio" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAADSTJModel.RegistroDeMateria" Width="1.5" PointX="9.75" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="SAADSTJModel.FK__Comproban__IdIns__21D600EE" ManuallyRouted="false" />
+        <AssociationConnector Association="SAADSTJModel.FK__RegistroD__IdCom__2AF556D4" ManuallyRouted="false" />
+        <AssociationConnector Association="SAADSTJModel.FK__Estudiante__Id__08B54D69" ManuallyRouted="false" />
+        <AssociationConnector Association="SAADSTJModel.FK__Inscripci__IdEst__3F115E1A" ManuallyRouted="false" />
+        <AssociationConnector Association="SAADSTJModel.FK__Inscripci__IdPla__3E1D39E1" ManuallyRouted="false" />
+        <AssociationConnector Association="SAADSTJModel.FK_RegistroDeMateria_Materia" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SAADSTJModel.Docente" Width="1.5" PointX="3" PointY="18.75" />
+        <AssociationConnector Association="SAADSTJModel.FK__Docente__IdPerso__6AEFE058" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

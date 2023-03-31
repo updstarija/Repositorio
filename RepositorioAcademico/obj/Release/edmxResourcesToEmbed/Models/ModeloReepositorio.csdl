@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RepositorioAcademicoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Documento">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="añoPublicacion" Type="Int32" Nullable="false" />
+    <Property Name="titulo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="descripcion" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
+    <Property Name="nota" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="clicks" Type="Int32" Nullable="false" />
+    <Property Name="enlace" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="idEstudiante" Type="Int32" Nullable="false" />
+    <Property Name="idCarrera" Type="Int32" Nullable="false" />
+    <Property Name="idTutor" Type="Int32" />
+    <Property Name="idTipoDocumento" Type="Int32" Nullable="false" />
+    <Property Name="idEstadoDocumento" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EstadoDocumento" Relationship="Self.FK__Documento__idEst__440B1D61" FromRole="Documento" ToRole="EstadoDocumento" />
+    <NavigationProperty Name="TipoDocumento" Relationship="Self.FK__Documento__idTip__4316F928" FromRole="Documento" ToRole="TipoDocumento" />
+  </EntityType>
+  <EntityType Name="EstadoDocumento">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Documento" Relationship="Self.FK__Documento__idEst__440B1D61" FromRole="EstadoDocumento" ToRole="Documento" />
+  </EntityType>
+  <EntityType Name="Personas">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="apellidoPaterno" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+    <Property Name="apellidoMaterno" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Personas" FromRole="Personas" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="estado" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__idRol__3B75D760" FromRole="Rol" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="TipoDocumento">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="estado" Type="Boolean" Nullable="false" />
+    <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Documento" Relationship="Self.FK__Documento__idTip__4316F928" FromRole="TipoDocumento" ToRole="Documento" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="contraseña" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="estado" Type="Boolean" Nullable="false" />
+    <Property Name="idRol" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Personas" Relationship="Self.FK_Usuario_Personas" FromRole="Usuario" ToRole="Personas" />
+    <NavigationProperty Name="Rol" Relationship="Self.FK__Usuario__idRol__3B75D760" FromRole="Usuario" ToRole="Rol" />
+  </EntityType>
+  <Association Name="FK__Documento__idEst__440B1D61">
+    <End Role="EstadoDocumento" Type="Self.EstadoDocumento" Multiplicity="1" />
+    <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EstadoDocumento">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Documento">
+        <PropertyRef Name="idEstadoDocumento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Documento__idTip__4316F928">
+    <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+    <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoDocumento">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Documento">
+        <PropertyRef Name="idTipoDocumento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Personas">
+    <End Role="Personas" Type="Self.Personas" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Personas">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Usuario__idRol__3B75D760">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="idRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RepositorioAcademicoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Documento" EntityType="Self.Documento" />
+    <EntitySet Name="EstadoDocumento" EntityType="Self.EstadoDocumento" />
+    <EntitySet Name="Personas" EntityType="Self.Personas" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" />
+    <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <AssociationSet Name="FK__Documento__idEst__440B1D61" Association="Self.FK__Documento__idEst__440B1D61">
+      <End Role="EstadoDocumento" EntitySet="EstadoDocumento" />
+      <End Role="Documento" EntitySet="Documento" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Documento__idTip__4316F928" Association="Self.FK__Documento__idTip__4316F928">
+      <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+      <End Role="Documento" EntitySet="Documento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Personas" Association="Self.FK_Usuario_Personas">
+      <End Role="Personas" EntitySet="Personas" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Usuario__idRol__3B75D760" Association="Self.FK__Usuario__idRol__3B75D760">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

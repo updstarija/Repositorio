@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutInicio.cshtml";
+}
+
+<div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    <div class="row" id="cuerpoDetalle" onclick="">
+    </div>
+</div>
+<div class="modal fade" id="modalDocumento" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel"><i class="fas fa-file"></i> Documento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <iframe id="iframe-pdf" style="width:100%;" height="510"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        DetalleDocumento();
+        $(document).on("contextmenu", function (e) {
+            e.preventDefault();
+        });
+    });
+
+    function DetalleDocumento() {
+        $("#cuerpoDetalle").html("");
+        if (@ViewBag.tipoDocumento == 1) {
+            $.getJSON('@Url.Action("DetalleTrabajoAcademico", "DetalleDocumento")', { idDocumento: @ViewBag.idDocumento }, function (codHTML) {
+                $("#cuerpoDetalle").html(codHTML);
+            });
+        } else {
+            $.getJSON('@Url.Action("DetalleTrabajoInvestigacion", "DetalleDocumento")', { idDocumento: @ViewBag.idDocumento }, function (codHTML) {
+                $("#cuerpoDetalle").html(codHTML);
+            });
+        }
+    }
+
+    function MostrarDocumento(nombreArchivo, tipo) {
+        $("#iframe-pdf").attr("src", "@Url.Action("MostrarDocumento", "DetalleDocumento")?nombreArchivo=" + nombreArchivo + "&tipo=" + tipo + "#toolbar=0&navpanes=0&scrollbar=0");
+    }
+</script>

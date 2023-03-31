@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutInicio.cshtml";
+}
+
+<div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="input-group">
+                <input type="search" class="form-control" placeholder="Buscar carrera" id="buscarCarrera" />
+                <button class="btn btnBusqueda" type="button" onclick="BuscarCarrera()">Buscar <i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        <div class="col-sm-12 mt-4">
+            <h5>Lista de carreras</h5>
+        </div>
+        <div class="col-sm-12">
+            <div id="cargando" class="text-center mt-5">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 mt-2" style="min-height:380px;">
+            <div class="list-group list-group-flush" id="listaCarrera">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        Listar();
+    });
+
+    function Listar() {
+        $("#listaCarrera").html("");
+        $("#cargando").show();
+        $.getJSON('@Url.Action("Listar", "PorCarreras")', function (codHTML) {
+            $("#cargando").hide();
+            $("#listaCarrera").html(codHTML);
+        });
+    }
+
+    function BuscarCarrera(){
+        if ($("#buscarCarrera").val() == "") {
+            Listar();
+        } else {
+            $("#listaCarrera").html("");
+            $("#cargando").show();
+            $.getJSON('@Url.Action("BuscarCarrera", "PorCarreras")', { carrera: $("#buscarCarrera").val() }, function (codHTML) {
+                $("#cargando").hide();
+                $("#listaCarrera").html(codHTML);
+            });
+        }
+    }
+</script>
+
+

@@ -1,0 +1,394 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>Trabajos académico</h4>
+<div id="cargando" class="text-center">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<div class="table-responsive mt-4" id="contenido">
+    <table id="tabla" class="table table-striped table-bordered display" style="width:100%"></table>
+</div>
+
+<!--Modal Prorroga-->
+<div class="modal fade" id="modalTrabajoAcademico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-franja"></div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Trabajo académico</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="min-height:350px;">
+                <div class="row">
+                    <!--columna 1-->
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>Buscar estudiante:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="id" hidden="hidden" />
+                                    <input type="text" class="form-control" id="idEstudiante" hidden="hidden" />
+                                    <input type="search" class="form-control" id="buscar" placeholder="Buscar por CI" oninput="BuscarEstudiante(this.value)">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                </div>
+                                <ul id="ListaEstudiantes" class="list-group">
+                                </ul>
+                                <div id="DatosEstudiante" class="mt-2"></div>
+                                <div id="CarrerasEstudiantes" class="mt-2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--columna 2-->
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>Seleccionar tipo de trabajo académico:</label>
+                                <select id="idTipoTrabajoAcademico" class="form-select"></select>
+                            </div>
+                            <div class="col-sm-12 mt-2">
+                                <label>Titulo:</label>
+                                <textarea class="form-control" id="titulo" placeholder="Titulo" maxlength="250" rows="2"></textarea>
+                            </div>
+                            <div class="col-sm-12 mt-2">
+                                <label>Descripción:</label>
+                                <textarea class="form-control" id="descripcion" placeholder="Descripción o resumen" maxlength="1500" rows="3"></textarea>
+                            </div>
+                            <div class="col-sm-4 mt-2">
+                                <label>Año de publicación:</label>
+                                <input type="number" class="form-control" id="añoPublicacion" placeholder="Año" />
+                            </div>
+                            <div class="col-sm-8 mt-2">
+                                <label>Documento:</label>
+                                <input type="file" class="form-control" id="documento" />
+                            </div>
+                            <div class="col-sm-12 mt-2">
+                                <label>Buscar tutor:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="idTutor" hidden="hidden" />
+                                    <input type="search" class="form-control" id="buscarTutor" placeholder="Buscar por docuemnto de identidad" oninput="BuscarTutor(this.value)">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                </div>
+                                <ul id="listaDocentes" class="list-group">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-accion" onclick="Guardar()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a class="btn-flotante" data-bs-toggle="modal" data-bs-target="#modalTrabajoAcademico" onclick="Limpiar()"><i class="fas fa-plus"></i></a>
+
+<script>
+    tabla = $('#tabla').DataTable({
+        columns: [
+            { title: "#", width: '5%' },
+            { title: "Fecha", width: '12%' },
+            { title: "Estudiante", width: '20%' },
+            { title: "Tipo de proyecto", width: '20%' },
+            { title: "Proyecto", width: '28%' },
+            { title: "Estado", width: '10%' },
+            { title: "Opciones", width: '5%' },
+        ],
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
+        "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]]
+    });
+        $("#cargando").show();
+        $("#contenido").hide();
+        $(document).ready(function () {
+
+            setTimeout(function () {
+                $("#cargando").hide();
+                $("#contenido").show();
+                Actualizar();
+            }, 1000);
+        });
+
+    function Limpiar() {
+        $("#id").val(0);
+        $("#idEstudiante").val(0);
+        $("#idCarrera").val(0);
+        $("#buscar").val("");
+        $("#ListaEstudiantes").html("");
+        ListarTipos();
+        DatosEstudiantesProtegidos();
+        $("#titulo").val("");
+        $("#descripcion").val("");
+        $("#añoPublicacion").val("");
+        $("#documento").html("");
+        $("#idTutor").val(0);
+        $("#buscarTutor").val("");
+        $("#listaDocentes").html("");
+    }
+
+    function Actualizar() {
+        $.getJSON('@Url.Action("Actualizar", "TrabajoAcademico")', function (trabajosAcademicos) {
+            tabla.destroy();
+            tabla = $("#tabla").DataTable({
+                data: trabajosAcademicos,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                }
+            });
+        });
+    }
+
+    function ListarTipos() {
+        $.getJSON('@Url.Action("ListarSelect", "TiposTrabajoAcademico")', function (tiposTrabajoAcademico) {
+            $("#idTipoTrabajoAcademico").html("");
+            var option = "<option value='0' selected>Seleccionar</option>";
+            $("#idTipoTrabajoAcademico").append(option);
+            for (var i = 0; i < tiposTrabajoAcademico.length; i++) {
+                option = "<option value='" + tiposTrabajoAcademico[i].id + "'>" + tiposTrabajoAcademico[i].nombre + "</option>";
+                $("#idTipoTrabajoAcademico").append(option);
+            }
+        });
+    }
+
+    function BuscarEstudiante(ci) {
+        $("#DatosEstudiante").html("");
+        $("#CarrerasEstudiantes").html("");
+        $("#ListaEstudiantes").html("");
+        $.getJSON('@Url.Action("BuscarEstudiante", "TrabajoAcademico")', { ci: ci }, function (estudiantes) {
+            var html = "";
+            for (var i = 0; i < estudiantes.length; i++) {
+                html += "<li class='list-group-item list-hover' onclick='SeleccionarEstudiante(" + estudiantes[i].id + ")'>" + estudiantes[i].nombreCompleto + "</li>";
+            }
+            $("#ListaEstudiantes").html(html);
+        });
+    }
+
+    function SeleccionarEstudiante(idPersona) {
+        $("#idEstudiante").val(idPersona);
+        $("#ListaEstudiantes").html("");
+        $("#DatosEstudiante").html("");
+        $("#CarrerasEstudiantes").html("");
+        $.getJSON('@Url.Action("SeleccionarEstudiante", "TrabajoAcademico")', { idPersona: idPersona }, function (persona) {
+            var codHtml = "<div class='row mt-1'>" +
+                                "<div class='text-center'>"+
+                                    "<h5>Datos Personales</h5>"+
+                                "</div>"+
+                                    "<div class='col-sm-6'>" +
+                                        "<div class='text-center mt-3' style='inline-size: 220px; overflow-wrap: break-word;'>" +
+                                            "<img src='https://winaero.com/blog/wp-content/uploads/2017/12/User-icon-256-blue.png' class='rounded-circle border' alt='Foto' style='height:150px; width:150px;'>" +
+                                             "<p class='datosPersona'>" + persona.correo + "</p>" +
+                                        "</div>" +
+                                    "</div>" +
+                                    "<div class='col-sm-6'>" +
+                                        "<div class='mt-4'>" +
+                                            "<p class='datosPersona'> <b>Nombre: </b>" + persona.nombre + "</p>" +
+                                            "<p class='datosPersona'> <b>Apellido Paterno: </b>" + persona.aPaterno + "</p>" +
+                                            "<p class='datosPersona'> <b>Apellido Materno: </b>" + persona.aMaterno + "</p>" +
+                                            "<p class='datosPersona'> <b>CI: </b>" + persona.ci + "</p>" +
+                                            "<p class='datosPersona'> <b>Celular: </b>" + persona.celular + "</p>" +
+                                        "</div>" +
+                                    "</div>" +
+                               "</div>";
+            $("#DatosEstudiante").html(codHtml);
+        });
+        $.getJSON('@Url.Action("CarrerasEstudiante", "TrabajoAcademico")', { idPersona: idPersona }, function (carrera) {
+            var carreras = "<h5 class='text-center mb-3'>Carreras</h5><select class='form-select' id='idCarrera'>";
+            for (var i = 0; i < carrera.length; i++) {
+                if (i == 0) {
+                    carreras += "<option value='" + carrera[i].id + "' selected>" + carrera[i].nombre + "</option>";
+                } else {
+                    carreras += "<option value='" + carrera[i].id + "'>" + carrera[i].nombre + "</option>";
+                }
+            }
+            carreras += "</select>";
+            $("#CarrerasEstudiantes").html(carreras);
+        });
+    }
+
+    function DatosEstudiantesProtegidos() {
+        var codHtml = "<div class='row mt-1'>" +
+            "<div class='text-center'>" +
+            "<h5>Datos Personales</h5>" +
+            "</div>" +
+            "<div class='col-sm-5'>" +
+            "<div class='text-center mt-3'>" +
+            "<img src='https://winaero.com/blog/wp-content/uploads/2017/12/User-icon-256-blue.png' class='rounded-circle border' alt='Foto' style='height:150px; width:150px;'>" +
+            "<p class='datosPersona'><span class='placeholder col-7'></span></p>" +
+            "</div>" +
+            "</div>" +
+            "<div class='col-sm-7'>" +
+            "<div class='mt-4'>" +
+            "<p class='datosPersona'> <b>Nombre: </b><span class='placeholder col-7'></span></p>" +
+            "<p class='datosPersona'> <b>Apellido Paterno: </b><span class='placeholder col-4'></span></p>" +
+            "<p class='datosPersona'> <b>Apellido Materno: </b><span class='placeholder col-3'></span></p>" +
+            "<p class='datosPersona'> <b>CI: </b><span class='placeholder col-3'></span></p>" +
+            "<p class='datosPersona'> <b>Celular: </b><span class='placeholder col-2'></span></p>" +
+            "</div>" +
+            "</div>" +
+            "</div>";
+        $("#DatosEstudiante").html(codHtml);
+    }
+
+    function BuscarTutor(ci) {
+        $("#listaDocentes").html("");
+        $.getJSON('@Url.Action("BuscarTutor", "TrabajoAcademico")', { ci: ci }, function (tutores) {
+            var html = "";
+            for (var i = 0; i < tutores.length; i++) {
+                html += "<li class='list-group-item list-hover' onclick='SeleccionarTutor(" + tutores[i].id + ")'>" + tutores[i].nombreCompleto + "</li>";
+            }
+            $("#listaDocentes").html(html);
+        });
+    }
+
+    function SeleccionarTutor(idTutor) {
+        $("#idTutor").val(idTutor);
+        $.getJSON('@Url.Action("SeleccionarTutor", "TrabajoAcademico")', { idTutor: idTutor }, function (tutor) {
+            $("#buscarTutor").val(tutor.nombreCompleto)
+            $("#listaDocentes").html("");
+        });
+    }
+
+    function Guardar() {
+        if ($("#idEstudiante").val() == 0) {
+            return Toast("warning", "Debe seleccionar un estudiante.");
+        }
+        if ($("#idCarrera").val() == 0) {
+            return Toast("warning", "Debe seleccionar una carrera.");
+        }
+        if ($("#idTipoTrabajoAcademico").val() == 0) {
+            return Toast("warning", "Debe seleccionar el tipo de trabajo académico.");
+        }
+        if ($("#titulo").val() == "") {
+            return Toast("warning", "Debe asignar un título al proyecto.");
+        }
+        if ($("#añoPublicacion").val() == "") {
+            return Toast("warning", "Debe ingresar el año de publicación del proyecto.");
+        }
+        var fileInput = $('#documento')[0];
+        var file = fileInput.files[0];
+        var formData = new FormData();
+        formData.append('archivo', file);
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GuardarArchivo", "TrabajoAcademico")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (s) {
+                switch (s.Tipo) {
+                    case 1:
+                        var trabajoAcademico =
+                        {
+                            id: $("#id").val(),
+                            idEstudiante: $("#idEstudiante").val(),
+                            idCarrera: $("#idCarrera").val(),
+                            titulo: $("#titulo").val(),
+                            descripcion: $("#descripcion").val(),
+                            añoPublicacion: $("#añoPublicacion").val(),
+                            documento: s.Mensaje,
+                            idTutor: $("#idTutor").val(),
+                            idTipoTrabajoAcademico: $("#idTipoTrabajoAcademico").val(),
+                        };
+                        console.log(trabajoAcademico);
+                        $.ajax({
+                            url: '@Url.Action("Guardar", "TrabajoAcademico")',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            dataType: 'json',
+                            data: JSON.stringify(trabajoAcademico),
+                            success: function (s) {
+                                switch (s.Tipo) {
+                                    case 1:
+                                        Toast("success", s.Mensaje);
+                                        $("#modalTrabajoAcademico").modal('hide');
+                                        Limpiar();
+                                        Actualizar();
+                                        break;
+                                    case 2:
+                                        Toast("warning", s.Mensaje);
+                                        break;
+                                    case 3:
+                                        Toast("error", s.Mensaje);
+                                        break;
+                                };
+                            }
+                        });
+                        break;
+                    case 2:
+                        Toast("warning", s.Mensaje);
+                        break;
+                    case 3:
+                        Toast("error", s.Mensaje);
+                        break;
+                }
+            }
+        });
+    }
+
+    function Deshabilitar(id)
+    {
+        cuteAlert({
+            type: "question",
+            title: "Deshabilitar",
+            message: "¿Está seguro que desea deshabilitar el trabajo académico?",
+            confirmText: "Aceptar",
+            cancelText: "Cancelar"
+        }).then((e) => {
+            console.log(e);
+            if (e == ("confirm")) {
+                $.getJSON('@Url.Action("Deshabilitar", "TrabajoAcademico")', { id: id }, function (s) {
+                    switch (s.Tipo) {
+                        case 1:
+                            Actualizar();
+                            Toast("success", s.Mensaje);
+                            break;
+                        case 2:
+                            Toast("warning", s.Mensaje);
+                            break;
+                        case 3:
+                            Toast("error", s.Mensaje);
+                            break;
+                    };
+                });
+            }
+        })
+    }
+
+    function Habilitar(id)
+    {
+        cuteAlert({
+            type: "question",
+            title: "Habilitar",
+            message: "¿Está seguro que desea habilitar el trabajo académico?",
+            confirmText: "Aceptar",
+            cancelText: "Cancelar"
+        }).then((e) => {
+            if (e == ("confirm")) {
+                $.getJSON('@Url.Action("Habilitar","TrabajoAcademico")', { id: id }, function (s) {
+                    switch (s.Tipo) {
+                        case 1:
+                            Actualizar();
+                            Toast("success", s.Mensaje);
+                            break;
+                        case 2:
+                            Toast("warning", s.Mensaje);
+                            break;
+                        case 3:
+                            Toast("error", s.Mensaje);
+                            break;
+                    };
+                });
+            }
+        })
+    }
+</script>

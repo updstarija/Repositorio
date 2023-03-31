@@ -1,0 +1,150 @@
+﻿:root {
+    --colorPrimario: #1A5276;
+    --colorSecundario: #2471A3;
+}
+
+#menuPrincipal {
+    background-image: url(../img/fondoMenu.jpg);
+    background-size: auto;
+    height:100%;
+    padding-bottom: 5px;
+}
+
+.primerSubMenu {
+    color: #B2BABB;
+}
+
+    .primerSubMenu:hover{
+        color: #ffffff;
+        cursor: pointer;
+    }
+
+.container-menu {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .container-menu .img {
+        margin-left: 9%;
+        width: 120px;
+    }
+
+    .container-menu .title {
+        margin-top: 1px;
+        text-align: right;
+        margin-right: 9%;
+        flex-grow: 1;
+        font-family: fantasy;
+        font-size: 50px;
+        color: #ffffff;
+    }
+
+.btnBusqueda{
+    background-color: var(--colorSecundario);
+    color: #ffffff;
+}
+
+    .btnBusqueda:hover {
+        background-color: var(--colorPrimario);
+        color: #ffffff;
+    }
+
+.list-busqueda a{
+    text-decoration: none;
+}
+
+.list-busqueda a:hover {
+    text-decoration: underline;
+}
+
+.list-group-item-cabecera {
+    background-color: var(--colorSecundario);
+    color: #fff;
+    font-weight: 400;
+}
+
+.list-group-item-cabecera:hover {
+    color: #fff;
+}
+
+.franja {
+    display: none;
+    height: 4px;
+    background-color: var(--colorPrimario);
+}
+
+    .img-docuento-detalle img{
+        width: 100%;
+        height: 100%;
+    }
+
+@media screen and (max-width: 595px) {
+    .container-menu .img {
+        margin-left: 1%;
+        width: 45px;
+        height: 45px;
+        margin-left: 25px;
+    }
+
+    .container-menu .title {
+        margin-right: 1%;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 10%;
+    }
+
+    .contenedor-portada {
+        display: none;
+    }
+
+    .franja {
+        display: block;
+    }
+
+    .img-docuento-detalle {
+        height: 110%
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .container-menu .img {
+        margin-left: 2%;
+        width: 50px;
+        height: 50px;
+        margin-left: 25px;
+    }
+
+    .container-menu .title {
+        margin-right: 2%;
+        font-size: 20px;
+        font-weight: 300;
+        margin-left: 10%;
+    }
+
+    .contenedor-portada {
+        display: none;
+    }
+
+    .franja {
+        display: block;
+    }
+
+    .img-docuento-detalle {
+        height: 110%
+    }
+}
+
+@media screen and (max-width: 960px){
+    .contenedor-portada {
+        display: none;
+    }
+
+    .franja {
+        display: block;
+    }
+
+    .img-docuento-detalle {
+        height: 110%
+    }
+}

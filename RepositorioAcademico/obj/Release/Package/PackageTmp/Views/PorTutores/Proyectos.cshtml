@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "Proyectos";
+    Layout = "~/Views/Shared/_LayoutInicio.cshtml";
+}
+
+<div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="input-group">
+                <input type="search" class="form-control" placeholder="Buscar por titulo" id="buscar" />
+                <button class="btn btnBusqueda" type="button" onclick="BuscarProyectoPorTituloTutor()">Buscar <i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        <div class="col-sm-12 mt-4">
+            <h5>Proyectos guiados por @ViewBag.Tutor</h5>
+        </div>
+        <div class="col-sm-12">
+            <div id="cargando" class="text-center mt-5">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 mt-2" style="min-height:380px;">
+            <div class="list-group list-group-flush" id="listaTutores">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        ListarPorTutor();
+    });
+
+    function ListarPorTutor() {
+        $("#listaTutores").html("");
+        $("#cargando").show();
+        var idTutor = @ViewBag.idTutor;
+        $.getJSON('@Url.Action("ListarPorTutor", "PorTutores")', { idTutor: idTutor }, function (codHTML) {
+            $("#cargando").hide();
+            $("#listaTutores").html(codHTML);
+        });
+    }
+
+    function BuscarProyectoPorTituloTutor() {
+        if ($("#buscar").val() == "") {
+            ListarPorTutor();
+        } else {
+            var idTutor = @ViewBag.idTutor;
+            $("#listaTutores").html("");
+            $("#cargando").show();
+            $.getJSON('@Url.Action("BuscarProyectoPorTituloTutor", "PorTutores")', { idTutor: idTutor, titulo: $("#buscar").val() }, function (codHTML) {
+                $("#cargando").hide();
+                $("#listaTutores").html(codHTML);
+            });
+        }
+    }
+</script>
+

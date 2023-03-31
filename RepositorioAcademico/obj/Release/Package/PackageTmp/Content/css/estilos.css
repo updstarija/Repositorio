@@ -1,0 +1,67 @@
+﻿:root {
+    --colorPrimario: #1A5276;
+    --colorSecundario: #2471A3;
+}
+
+.menuPrincipal {
+    background-color: var(--colorPrimario);
+}
+
+
+.modal-franja {
+    height: 5px;
+    background-color: var(--colorPrimario);
+}
+
+.btn-accion {
+    background-color: var(--colorSecundario);
+    color: #fff;
+}
+
+.list-hover:hover {
+    color: #fff;
+    background-color: var(--colorSecundario);
+    cursor: pointer;
+}
+
+.datosPersona {
+    font-size: 13px;
+}
+
+.btn-Ayuda {
+    background-color: #fff;
+    border: solid 1px #5499C7;
+    color: #5499C7;
+}
+
+.btn-Ayuda:hover {
+    background-color: #5499C7;
+    color: #fff;
+}
+
+.btn-flotante {
+    cursor: pointer;
+    font-size: 16px;
+    color: #ffffff;
+    border-radius: 100%;
+    background-color: var(--colorPrimario);
+    padding: 15px 20px;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    transition: all 300ms ease 0ms;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    z-index: 99;
+}
+
+    .btn-flotante:hover {
+        background-color: var(--colorSecundario);
+        color: #ffffff;
+        box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+        transform: translateY(-7px);
+    }
+
+.btn-accion:hover {
+    background-color: var(--colorPrimario);
+    color: #fff;
+}

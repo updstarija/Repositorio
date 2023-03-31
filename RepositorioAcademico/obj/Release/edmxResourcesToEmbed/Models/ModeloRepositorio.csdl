@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RepositorioAcademicoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CentroInvestigacion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="estado" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="TrabajoInvestigacion" Relationship="Self.FK__TrabajoIn__idCen__47DBAE45" FromRole="CentroInvestigacion" ToRole="TrabajoInvestigacion" />
+  </EntityType>
+  <EntityType Name="Estado">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="TrabajoAcademico" Relationship="Self.FK__TrabajoAc__idEst__4316F928" FromRole="Estado" ToRole="TrabajoAcademico" />
+    <NavigationProperty Name="TrabajoInvestigacion" Relationship="Self.FK__TrabajoIn__idEst__48CFD27E" FromRole="Estado" ToRole="TrabajoInvestigacion" />
+  </EntityType>
+  <EntityType Name="Personas">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="apellidoPaterno" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+    <Property Name="apellidoMaterno" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="estado" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__idRol__3B75D760" FromRole="Rol" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="TipoTrabajoAcademico">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="estado" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="TrabajoAcademico" Relationship="Self.FK__TrabajoAc__idTip__4222D4EF" FromRole="TipoTrabajoAcademico" ToRole="TrabajoAcademico" />
+  </EntityType>
+  <EntityType Name="TrabajoAcademico">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="añoPublicacion" Type="Int32" Nullable="false" />
+    <Property Name="titulo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="descripcion" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="documento" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="idEstudiante" Type="Int32" Nullable="false" />
+    <Property Name="idCarrera" Type="Int32" Nullable="false" />
+    <Property Name="idTutor" Type="Int32" Nullable="false" />
+    <Property Name="idTipoTrabajoAcademico" Type="Int32" Nullable="false" />
+    <Property Name="idEstado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Estado" Relationship="Self.FK__TrabajoAc__idEst__4316F928" FromRole="TrabajoAcademico" ToRole="Estado" />
+    <NavigationProperty Name="TipoTrabajoAcademico" Relationship="Self.FK__TrabajoAc__idTip__4222D4EF" FromRole="TrabajoAcademico" ToRole="TipoTrabajoAcademico" />
+  </EntityType>
+  <EntityType Name="TrabajoInvestigacion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="añoPublicacion" Type="Int32" Nullable="false" />
+    <Property Name="titulo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="descripcion" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="documento" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="idCentroInvestigacion" Type="Int32" Nullable="false" />
+    <Property Name="idEstado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CentroInvestigacion" Relationship="Self.FK__TrabajoIn__idCen__47DBAE45" FromRole="TrabajoInvestigacion" ToRole="CentroInvestigacion" />
+    <NavigationProperty Name="Estado" Relationship="Self.FK__TrabajoIn__idEst__48CFD27E" FromRole="TrabajoInvestigacion" ToRole="Estado" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="contraseña" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="estado" Type="Boolean" Nullable="false" />
+    <Property Name="idRol" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Rol" Relationship="Self.FK__Usuario__idRol__3B75D760" FromRole="Usuario" ToRole="Rol" />
+  </EntityType>
+  <Association Name="FK__TrabajoIn__idCen__47DBAE45">
+    <End Role="CentroInvestigacion" Type="Self.CentroInvestigacion" Multiplicity="1" />
+    <End Role="TrabajoInvestigacion" Type="Self.TrabajoInvestigacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CentroInvestigacion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TrabajoInvestigacion">
+        <PropertyRef Name="idCentroInvestigacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TrabajoAc__idEst__4316F928">
+    <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+    <End Role="TrabajoAcademico" Type="Self.TrabajoAcademico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estado">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TrabajoAcademico">
+        <PropertyRef Name="idEstado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TrabajoIn__idEst__48CFD27E">
+    <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+    <End Role="TrabajoInvestigacion" Type="Self.TrabajoInvestigacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estado">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TrabajoInvestigacion">
+        <PropertyRef Name="idEstado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Usuario__idRol__3B75D760">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="idRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TrabajoAc__idTip__4222D4EF">
+    <End Role="TipoTrabajoAcademico" Type="Self.TipoTrabajoAcademico" Multiplicity="1" />
+    <End Role="TrabajoAcademico" Type="Self.TrabajoAcademico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoTrabajoAcademico">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TrabajoAcademico">
+        <PropertyRef Name="idTipoTrabajoAcademico" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RepositorioAcademicoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CentroInvestigacion" EntityType="Self.CentroInvestigacion" />
+    <EntitySet Name="Estado" EntityType="Self.Estado" />
+    <EntitySet Name="Personas" EntityType="Self.Personas" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" />
+    <EntitySet Name="TipoTrabajoAcademico" EntityType="Self.TipoTrabajoAcademico" />
+    <EntitySet Name="TrabajoAcademico" EntityType="Self.TrabajoAcademico" />
+    <EntitySet Name="TrabajoInvestigacion" EntityType="Self.TrabajoInvestigacion" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <AssociationSet Name="FK__TrabajoIn__idCen__47DBAE45" Association="Self.FK__TrabajoIn__idCen__47DBAE45">
+      <End Role="CentroInvestigacion" EntitySet="CentroInvestigacion" />
+      <End Role="TrabajoInvestigacion" EntitySet="TrabajoInvestigacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TrabajoAc__idEst__4316F928" Association="Self.FK__TrabajoAc__idEst__4316F928">
+      <End Role="Estado" EntitySet="Estado" />
+      <End Role="TrabajoAcademico" EntitySet="TrabajoAcademico" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TrabajoIn__idEst__48CFD27E" Association="Self.FK__TrabajoIn__idEst__48CFD27E">
+      <End Role="Estado" EntitySet="Estado" />
+      <End Role="TrabajoInvestigacion" EntitySet="TrabajoInvestigacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Usuario__idRol__3B75D760" Association="Self.FK__Usuario__idRol__3B75D760">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TrabajoAc__idTip__4222D4EF" Association="Self.FK__TrabajoAc__idTip__4222D4EF">
+      <End Role="TipoTrabajoAcademico" EntitySet="TipoTrabajoAcademico" />
+      <End Role="TrabajoAcademico" EntitySet="TrabajoAcademico" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

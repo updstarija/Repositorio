@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SAADSTJModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ComprobanteRegistro">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" Nullable="false" />
+    <Property Name="FechaHora" Type="datetime" />
+    <Property Name="IdInscripcionCarrera" Type="int" />
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="IdEstado" Type="smallint" Nullable="false" />
+    <Property Name="IdMotivoRegistroEspecial" Type="smallint" />
+  </EntityType>
+  <EntityType Name="Docente">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="FechaRegistro" Type="date" />
+    <Property Name="IdNivelEstudio" Type="smallint" />
+    <Property Name="IdDenominacion" Type="smallint" />
+    <Property Name="IdProfesion" Type="smallint" />
+    <Property Name="NIT" Type="int" />
+    <Property Name="NUA" Type="varchar" MaxLength="15" />
+    <Property Name="IdEstado" Type="smallint" />
+    <Property Name="FechaIngreso" Type="date" />
+    <Property Name="Pin" Type="varchar" MaxLength="120" />
+    <Property Name="NroFolio" Type="int" />
+    <Property Name="AntiguedadDocencia" Type="tinyint" />
+    <Property Name="AntiguedadLaboral" Type="tinyint" />
+    <Property Name="IdTipoDocente" Type="int" Nullable="false" />
+    <Property Name="IdClasificacionDocente" Type="int" />
+    <Property Name="IdMoodleUsuario" Type="bigint" />
+    <Property Name="EmailOffice365" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Estudiante">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="AnioEgresoBachiller" Type="smallint" />
+    <Property Name="NroTitulo" Type="varchar" MaxLength="30" />
+    <Property Name="NroFolio" Type="int" Nullable="false" />
+    <Property Name="NroFolioPostGrado" Type="varchar" MaxLength="50" />
+    <Property Name="Pin" Type="varchar" MaxLength="30" />
+    <Property Name="FechaRegistro" Type="datetime" />
+    <Property Name="IdColegio" Type="smallint" />
+    <Property Name="IdTutor" Type="int" />
+    <Property Name="IdCondicionLaboral" Type="smallint" />
+    <Property Name="IdTurnoBachiller" Type="smallint" />
+    <Property Name="IdSede" Type="smallint" />
+    <Property Name="IdParentesco" Type="smallint" />
+    <Property Name="FechaTituloBachiller" Type="date" />
+    <Property Name="IdUniversidad" Type="smallint" />
+    <Property Name="IdGrupoDocumento" Type="int" />
+    <Property Name="PersonaReferencia" Type="varchar" MaxLength="200" />
+    <Property Name="TelefonoReferencia" Type="varchar" MaxLength="50" />
+    <Property Name="IdIdiomaMaterno" Type="smallint" />
+    <Property Name="Discapacidad" Type="nvarchar" MaxLength="500" />
+    <Property Name="IdMoodleUsuario" Type="bigint" />
+    <Property Name="EmailOffice365" Type="nvarchar" MaxLength="255" />
+    <Property Name="VeteranoGuerra" Type="bit" />
+  </EntityType>
+  <EntityType Name="InscripcionCarrera">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" />
+    <Property Name="IdPlanEstudio" Type="smallint" Nullable="false" />
+    <Property Name="IdEstudiante" Type="int" Nullable="false" />
+    <Property Name="IdUsuario" Type="int" />
+    <Property Name="IdTipoBeneficio" Type="smallint" />
+    <Property Name="IdSistemaEstudio" Type="smallint" />
+    <Property Name="IdTurno" Type="smallint" />
+    <Property Name="IdFormaPago" Type="smallint" />
+    <Property Name="IdTipoIngreso" Type="smallint" />
+    <Property Name="IdEstado" Type="smallint" />
+    <Property Name="IdSistemaEnsenanza" Type="smallint" />
+    <Property Name="IdTipoEstudiante" Type="int" />
+    <Property Name="Recargo" Type="int" />
+    <Property Name="NroCertificadoEgreso" Type="varchar" MaxLength="50" />
+    <Property Name="Regular" Type="bit" />
+    <Property Name="NroFolio" Type="varchar" MaxLength="50" />
+    <Property Name="NroHabilitacion" Type="nvarchar" MaxLength="50" />
+    <Property Name="SemestreActual" Type="smallint" />
+  </EntityType>
+  <EntityType Name="Materia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Sigla" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="IdEstado" Type="smallint" Nullable="false" />
+    <Property Name="IdMateriaContenido" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Persona">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ApellidoPaterno" Type="varchar" MaxLength="50" />
+    <Property Name="ApellidoMaterno" Type="varchar" MaxLength="50" />
+    <Property Name="IdTipoDocumento" Type="smallint" />
+    <Property Name="DocumentoIdentidad" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IdCiudadDocumentoIdentidad" Type="smallint" />
+    <Property Name="Direccion" Type="varchar" MaxLength="100" />
+    <Property Name="TelefonoDomicilio" Type="varchar" MaxLength="15" />
+    <Property Name="Celular" Type="varchar" MaxLength="15" />
+    <Property Name="FechaNacimiento" Type="date" Nullable="false" />
+    <Property Name="Email1" Type="varchar" MaxLength="100" />
+    <Property Name="Email2" Type="varchar" MaxLength="100" />
+    <Property Name="SitioWeb" Type="varchar" MaxLength="50" />
+    <Property Name="Facebook" Type="varchar" MaxLength="50" />
+    <Property Name="InstitucionTrabajo" Type="varchar" MaxLength="50" />
+    <Property Name="DireccionTrabajo" Type="varchar" MaxLength="100" />
+    <Property Name="TelefonoTrabajo" Type="varchar" MaxLength="15" />
+    <Property Name="IdSexo" Type="smallint" />
+    <Property Name="NIT" Type="int" />
+    <Property Name="Observacion" Type="varchar" MaxLength="50" />
+    <Property Name="Fax" Type="varchar" MaxLength="15" />
+    <Property Name="Foto" Type="varchar" MaxLength="100" />
+    <Property Name="IdEstadoCivil" Type="smallint" />
+    <Property Name="IdTipoSangre" Type="smallint" />
+    <Property Name="IdCiudad" Type="smallint" />
+    <Property Name="IdNacionalidad" Type="smallint" />
+    <Property Name="Imagen" Type="varbinary(max)" />
+    <Property Name="TieneFoto" Type="bit" />
+    <Property Name="IdRN" Type="int" />
+  </EntityType>
+  <EntityType Name="PlanEstudio">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="smallint" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="Sigla" Type="varchar" MaxLength="50" />
+    <Property Name="Duracion" Type="smallint" />
+    <Property Name="IdPeriodicidad" Type="smallint" />
+    <Property Name="FechaCreacion" Type="datetime" />
+    <Property Name="IdEstadoPlan" Type="smallint" />
+    <Property Name="IdCarrera" Type="smallint" />
+    <Property Name="CantidadMaterias" Type="smallint" />
+    <Property Name="CantidadElectivas" Type="smallint" />
+    <Property Name="TotalHorasTeoricas" Type="smallint" />
+    <Property Name="TotalHorasPracticas" Type="smallint" />
+    <Property Name="TotalHorasAutonomas" Type="smallint" />
+    <Property Name="TotalHorasTeoricasVirtuales" Type="smallint" />
+    <Property Name="TotalHorasPracticasVirtuales" Type="smallint" />
+    <Property Name="PeriodicidadInicialElectivas" Type="tinyint" />
+    <Property Name="PeriodoRequeridoPractica" Type="int" />
+    <Property Name="ResolucionMinisterial" Type="varchar" MaxLength="50" />
+    <Property Name="IdUsuario" Type="int" />
+    <Property Name="Precio" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PanelesDeGrado" Type="varchar" MaxLength="250" />
+    <Property Name="CitePlanEstudio" Type="varchar" MaxLength="50" />
+    <Property Name="fechaAprovacion" Type="datetime" />
+    <Property Name="RegimenComplementario" Type="int" />
+    <Property Name="HorasPracticasProfesional" Type="int" />
+    <Property Name="HorasMDG" Type="int" />
+    <Property Name="IdModeloEstudio" Type="int" />
+    <Property Name="IdTipoPlanEstudio" Type="int" />
+    <Property Name="IdSistemaEstudio" Type="smallint" />
+  </EntityType>
+  <EntityType Name="RegistroDeMateria">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" Nullable="false" />
+    <Property Name="IdGrupoAperturado" Type="bigint" Nullable="false" />
+    <Property Name="IdEstadoMateriaRegistrada" Type="smallint" Nullable="false" />
+    <Property Name="IdComprobanteRegistro" Type="bigint" Nullable="false" />
+    <Property Name="ItemRecibo" Type="smallint" />
+    <Property Name="NumeroRecibo" Type="bigint" />
+    <Property Name="PorcentajeBeca" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Nota" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IdBeca" Type="int" />
+    <Property Name="Costo" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IdMateria" Type="int" Nullable="false" />
+    <Property Name="IdPlanEstudio" Type="smallint" />
+    <Property Name="IdValidezDetalleRecibo" Type="bigint" />
+    <Property Name="IdNivelDominioCompetencia" Type="int" />
+    <Property Name="FechaModificacion" Type="date" />
+    <Property Name="IdSolicitudRegistroEspecial" Type="bigint" />
+  </EntityType>
+  <Association Name="FK__Comproban__IdIns__21D600EE">
+    <End Role="InscripcionCarrera" Type="Self.InscripcionCarrera" Multiplicity="0..1" />
+    <End Role="ComprobanteRegistro" Type="Self.ComprobanteRegistro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InscripcionCarrera">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ComprobanteRegistro">
+        <PropertyRef Name="IdInscripcionCarrera" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Docente__IdPerso__6AEFE058">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+    <End Role="Docente" Type="Self.Docente" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Docente">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Estudiante__Id__08B54D69">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+    <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Estudiante">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Inscripci__IdEst__3F115E1A">
+    <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="1" />
+    <End Role="InscripcionCarrera" Type="Self.InscripcionCarrera" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estudiante">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InscripcionCarrera">
+        <PropertyRef Name="IdEstudiante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Inscripci__IdPla__3E1D39E1">
+    <End Role="PlanEstudio" Type="Self.PlanEstudio" Multiplicity="1" />
+    <End Role="InscripcionCarrera" Type="Self.InscripcionCarrera" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PlanEstudio">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InscripcionCarrera">
+        <PropertyRef Name="IdPlanEstudio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RegistroD__IdCom__2AF556D4">
+    <End Role="ComprobanteRegistro" Type="Self.ComprobanteRegistro" Multiplicity="1" />
+    <End Role="RegistroDeMateria" Type="Self.RegistroDeMateria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ComprobanteRegistro">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistroDeMateria">
+        <PropertyRef Name="IdComprobanteRegistro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RegistroDeMateria_Materia">
+    <End Role="Materia" Type="Self.Materia" Multiplicity="1" />
+    <End Role="RegistroDeMateria" Type="Self.RegistroDeMateria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Materia">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistroDeMateria">
+        <PropertyRef Name="IdMateria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SAADSTJModelStoreContainer">
+    <EntitySet Name="ComprobanteRegistro" EntityType="Self.ComprobanteRegistro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Docente" EntityType="Self.Docente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Estudiante" EntityType="Self.Estudiante" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InscripcionCarrera" EntityType="Self.InscripcionCarrera" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Materia" EntityType="Self.Materia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PlanEstudio" EntityType="Self.PlanEstudio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RegistroDeMateria" EntityType="Self.RegistroDeMateria" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Comproban__IdIns__21D600EE" Association="Self.FK__Comproban__IdIns__21D600EE">
+      <End Role="InscripcionCarrera" EntitySet="InscripcionCarrera" />
+      <End Role="ComprobanteRegistro" EntitySet="ComprobanteRegistro" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Docente__IdPerso__6AEFE058" Association="Self.FK__Docente__IdPerso__6AEFE058">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="Docente" EntitySet="Docente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Estudiante__Id__08B54D69" Association="Self.FK__Estudiante__Id__08B54D69">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="Estudiante" EntitySet="Estudiante" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Inscripci__IdEst__3F115E1A" Association="Self.FK__Inscripci__IdEst__3F115E1A">
+      <End Role="Estudiante" EntitySet="Estudiante" />
+      <End Role="InscripcionCarrera" EntitySet="InscripcionCarrera" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Inscripci__IdPla__3E1D39E1" Association="Self.FK__Inscripci__IdPla__3E1D39E1">
+      <End Role="PlanEstudio" EntitySet="PlanEstudio" />
+      <End Role="InscripcionCarrera" EntitySet="InscripcionCarrera" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RegistroD__IdCom__2AF556D4" Association="Self.FK__RegistroD__IdCom__2AF556D4">
+      <End Role="ComprobanteRegistro" EntitySet="ComprobanteRegistro" />
+      <End Role="RegistroDeMateria" EntitySet="RegistroDeMateria" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RegistroDeMateria_Materia" Association="Self.FK_RegistroDeMateria_Materia">
+      <End Role="Materia" EntitySet="Materia" />
+      <End Role="RegistroDeMateria" EntitySet="RegistroDeMateria" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
